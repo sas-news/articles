@@ -1,0 +1,11 @@
+title: "自作SNSで学ぶFirebaseセキュリティ入門"
+summary: "Next.jsとFirebaseを用いて"
+topics:
+  - "firebase"
+  - "nextjs"
+  - "セキュリティ"
+published: false
+price: 500
+toc_depth: 2
+chapters:
+  - "4cf42b"
