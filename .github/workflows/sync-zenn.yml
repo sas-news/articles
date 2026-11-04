@@ -24,7 +24,9 @@ jobs:
         run: |
           set -e
           rm -rf /tmp/zmirror && mkdir -p /tmp/zmirror
-          cp -r zenn/articles zenn/books /tmp/zmirror/
+          cp -r zenn/articles /tmp/zmirror/
+          mkdir -p /tmp/zmirror/books
+          cp -r zenn/books/. /tmp/zmirror/books/ 2>/dev/null || true
           git checkout zenn 2>/dev/null || git checkout --orphan zenn
           git rm -rq . || true
           cp -r /tmp/zmirror/articles /tmp/zmirror/books .
