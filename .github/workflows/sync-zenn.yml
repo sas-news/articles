@@ -1,0 +1,38 @@
+# Zenn連携用のブランチ（`zenn`）を main の `zenn/` から自動生成する。
+# ZennのGitHub連携はリポジトリ直下の articles/・books/ しか見ないため、
+# main側は美しい構成のまま、連携だけ機械的に満たす。
+# 使うのは checkout + 素のgitだけ（腐りにくさ優先、外部CLI不要）。
+name: Sync Zenn deploy branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "zenn/**"
+      - ".github/workflows/sync-zenn.yml"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Mirror zenn/ to root on zenn branch
+        run: |
+          set -e
+          rm -rf /tmp/zmirror && mkdir -p /tmp/zmirror
+          cp -r zenn/articles zenn/books /tmp/zmirror/
+          git checkout zenn 2>/dev/null || git checkout --orphan zenn
+          git rm -rq . || true
+          cp -r /tmp/zmirror/articles /tmp/zmirror/books .
+          git add -A
+          if git diff --cached --quiet; then
+            echo "no changes to sync"
+          else
+            git -c user.name="github-actions" -c user.email="github-actions@github.com" \
+              commit -m "Sync from main $(git rev-parse --short main)"
+            git push origin zenn
+          fi

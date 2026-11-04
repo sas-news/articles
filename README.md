@@ -22,22 +22,32 @@ SAS新聞の記事置き場。Qiita / Zenn / note の原稿・バックアップ
 ## 構成
 
 ```
-articles/   Zenn連携用。本文が正本。ファイル名 = slug（Zennの仕様）
-books/      Zennの本。使うときに作る
-qiita/      Qiitaのバックアップ＋原稿。ファイル名 = Qiitaの記事ID（公開後）
-note/       noteのバックアップ＋原稿。ファイル名 = noteのキー（公開後）
-drafts/     未公開草稿。プラットフォーム非依存。ファイル名は自由なslug
-ideas/      ネタ置き場。STOCK.mdに1行ずつ貯める
+zenn/           Zenn用。articles/（正本、ファイル名=slug）+ books/ + package.json
+qiita/          Qiitaのバックアップ＋原稿。ファイル名 = Qiitaの記事ID（公開後）
+note/           noteのバックアップ＋原稿。ファイル名 = noteのキー（公開後）
+drafts/         未公開草稿。プラットフォーム非依存。ファイル名は自由なslug
+ideas/          ネタ置き場。STOCK.mdに1行ずつ貯める
+.github/        Zenn連携ブランチへの自動鏡写し（下記）
 ```
 
-- `articles/` と `books/` はルート直下に置く（ZennのGitHub連携の仕様）。
-- このリポジトリ自体をZennの連携リポジトリに指定できる。
+`zenn/` の中はZennの公式構成そのままなので、`zenn` CLIもそのまま動く。
+
+### なぜ `zenn/` に畳めるのか（Zenn連携の仕組み）
+
+ZennのGitHub連携は「連携リポジトリの**ルート直下**の `articles/`・`books/`」しか見ない（公式仕様）。
+そこでブランチを使い分ける：
+
+- `main`（ここ、普段使い）: 美しい構成のまま。ご主人様とわたくしが触る
+- `zenn`（機械生成、触らない）: ルート直下に `articles/`・`books/` を置いた鏡写し。Zenn連携はこちらを向ける
+
+`main` の `zenn/` が変わるとAction（素のgitのみ、外部CLI不要）が `zenn` ブランチを更新する。
+デプロイ対象ブランチはZennダッシュボードのデプロイ設定で `zenn` に変更すること。
 
 ## ワークフロー
 
 1. ネタが出たら `ideas/STOCK.md` に1行追加（リポジトリ・技術・候補先・希少性の根拠。日本語検索で未確認のまま書かない）
 2. 書くときは `drafts/<slug>.md` で執筆。対象リポジトリのコードとドキュメントを読み、技術的主張は読んだファイルに接地させる
-3. 先が決まったら所定の場所へ移動（Zennなら `articles/` にZenn front-matterで）
+3. 先が決まったら所定の場所へ移動（Zennなら `zenn/articles/` にZenn front-matterで）
 4. プレビューして公開（下記）
 5. 公開したらID・URLをファイル先頭のメタ情報とSTOCKに記録
 
@@ -45,9 +55,9 @@ ideas/      ネタ置き場。STOCK.mdに1行ずつ貯める
 
 ### Zenn
 
-- 初回のみ: Zennダッシュボード → GitHub連携 → このリポジトリを指定。以降 `articles/` へのpushが自動反映される
+- 初回のみ: Zennダッシュボード → GitHub連携 → このリポジトリを指定し、デプロイ対象ブランチを `zenn` にする。以降 `main` の `zenn/` へのpushが自動反映される
 - 下書きは front-matter の `published: false`。公開するとき true にしてpush
-- 手元プレビュー: `npm install` して `npm run preview`
+- 手元プレビュー: `cd zenn && npm install` して `npm run preview`
 
 ### Qiita
 
@@ -63,10 +73,9 @@ ideas/      ネタ置き場。STOCK.mdに1行ずつ貯める
 ## バックアップ方針
 
 - 既存記事は初回取り込み済み（Qiita 22、Zenn 4、note 2。2026-11-04時点）
-- Zenn連携後は `articles/` が正本なのでバックアップ不要。Qiita/noteは公開のたびに手動で取り込む
+- Zenn連携後は `zenn/articles/` が正本なのでバックアップ不要。Qiita/noteは公開のたびに手動で取り込む
 - 画像は各プラットフォーム側のURL参照のまま。移行しない
 
 ## 旧zenn-contentについて
 
-`sas-news/zenn-content` は草稿1本のみ・zenn-cli 0.1系の化石だったため、このリポジトリに置き換えた。
-Zenn連携先をこちらに切り替えたら、旧リポジトリはアーカイブしてよい。
+`sas-news/zenn-content` は草稿1本のみ・zenn-cli 0.1系の化石だったため、このリポジトリに置き換え、アーカイブ済み（2026-11-04）。
