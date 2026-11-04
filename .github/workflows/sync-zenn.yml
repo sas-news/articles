@@ -27,7 +27,12 @@ jobs:
           cp -r zenn/articles /tmp/zmirror/
           mkdir -p /tmp/zmirror/books
           cp -r zenn/books/. /tmp/zmirror/books/ 2>/dev/null || true
-          git checkout zenn 2>/dev/null || git checkout --orphan zenn
+          if git show-ref --verify --quiet refs/heads/zenn; then
+            git checkout zenn
+          else
+            git checkout --orphan zenn
+          fi
+          test "$(git branch --show-current)" = zenn
           git rm -rq . || true
           cp -r /tmp/zmirror/articles /tmp/zmirror/books .
           git add -A
