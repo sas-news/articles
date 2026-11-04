@@ -1,0 +1,1 @@
+{"dependencies": {"zenn-cli": "^0.5.13"}, "description": "SAS新聞の記事置き場。Qiita / Zenn / note の原稿・バックアップ・ネタイ置き場を一元管理する。", "license": "MIT", "name": "sasnews-articles", "private": true, "scripts": {"new:article": "zenn new:article", "new:book": "zenn new:book", "preview": "zenn preview"}, "version": "1.0.0"}
