@@ -5,6 +5,7 @@ topics:
   - "nextjs"
   - "セキュリティ"
 published: false
+allow_override: true
 price: 500
 toc_depth: 2
 chapters:
