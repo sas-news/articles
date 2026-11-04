@@ -33,7 +33,8 @@ jobs:
             git checkout --orphan zenn
           fi
           test "$(git branch --show-current)" = zenn
-          git rm -rq . || true
+          # orphan直後は全ファイルがstaged扱いのため -f が必須
+          git rm -rfq . || true
           cp -r /tmp/zmirror/articles /tmp/zmirror/books .
           git add -A
           if git diff --cached --quiet; then
