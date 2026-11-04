@@ -27,8 +27,9 @@ jobs:
           cp -r zenn/articles /tmp/zmirror/
           mkdir -p /tmp/zmirror/books
           cp -r zenn/books/. /tmp/zmirror/books/ 2>/dev/null || true
-          if git show-ref --verify --quiet refs/heads/zenn; then
-            git checkout zenn
+          git fetch origin zenn 2>/dev/null || true
+          if git show-ref --verify --quiet refs/remotes/origin/zenn; then
+            git checkout -B zenn origin/zenn
           else
             git checkout --orphan zenn
           fi
