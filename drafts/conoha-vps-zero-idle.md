@@ -9,6 +9,8 @@ source: sas-news/conoha-port-gate（実装に基づく）。
 公開時のやること:
   - 冒頭に「ConoHa Advent Calendar 2026 n日目です」を追記
   - 本文のGitHubリンクは public 前提で貼ってある。非公開のまま出すなら外す
+  - 同梱の images/conoha-*.png 3枚をQiitaにアップロードしてURL差し替え
+  - スクショを足すなら候補: ①VPS追加フローのプラン選択画面（右に料金。契約されない説明とセットで）②左下のバージョン切替 ③APIユーザー追加 ④API情報（テナントID/エンドポイント）
   - 公開後、このファイルを qiita/<記事ID>.md に移動しURLを記録、STOCK.md を published に更新
 -->
 
@@ -19,8 +21,11 @@ source: sas-news/conoha-port-gate（実装に基づく）。
 ConoHa VPSは時間課金です。ただし **停止しても課金は止まらず、削除でしか止まりません**（[公式FAQ](https://support.conoha.jp/common/faq/payment-q/billing-q/)）。なので「使うときだけAPIでVPSを作って、終わったら即消す」形にすれば、待機中はずっと0円になります。
 ConoHa VPS 3.0にはOpenStackベースのAPIが付いているので、作成から削除まで全部APIでやります。この記事はそのときの記録です。APIの話が主体なので、自動化ツールの話は最後にちょっとだけ出てきます。
 
+![使い捨てVPSのライフサイクル](images/conoha-lifecycle.png)
+
 # 準備（APIユーザー）
-コントロールパネルの「VPS → API」からAPIユーザーを作ります。このメニュー、VPSを1台も契約していないと表示されません。初回だけ手動で1台契約してください（APIユーザーを作った後に消してOK）。
+コントロールパネルの「VPS → API」からAPIユーザーを作ります。
+ここで最初、私は「VPSを1台契約していないとAPIが使えない（だから初回は怖いけど1台契約するしかない）」と思い込んでいました。実際は違いました。初回はVPS追加のフロー（プランとOSを選ぶ。右側に料金がドーンと出てきて怖い）が表示されるんですが、**512MBやDebianを選んで進めても契約は実行されず、そのまま管理画面に入れます**。APIユーザーを作るだけならVPSの契約は要りません。右の料金表示にビビる必要はありません。
 コントロールパネルは左下の「バージョン切替」で **Ver.3.0** にしておいてください（VPS 3.0のAPIです）。
 APIユーザーを作ったら「API情報」からテナントIDとエンドポイントを控えます。エンドポイントはサービスごとに分かれていて、ホスト名にリージョンが入ります（例は`c3j1`）。
 
@@ -61,6 +66,8 @@ $ curl -s -D - -o /dev/null https://identity.c3j1.conoha.io/v3/auth/tokens \
 
 # VPSを作る
 作成は「ボリューム → セキュリティグループ → サーバー」の順です。
+
+![VPS 1台分を作るAPIの流れ](images/conoha-api-flow.png)
 
 ## ボリューム
 まずイメージからブートボリュームを作ります。512MBプランだとOSはDebian 13で、イメージ名は`debian-13.5`でした（Ubuntuは1GBからのようです）。フレーバーは`g2l-t-c1m512`。イメージとフレーバーの一覧はそれぞれ`GET /v2/images`（image-service）と`GET /v2.1/flavors/detail`（compute）で取れます。
@@ -151,6 +158,8 @@ VPSの中で`nft list ruleset`を見ると、ConoHaのDebian 13テンプレー�
 この罠の詳細は先人が書いてくれているので、こちらを見てください。
 [ConoHaのVPSのポートに穴をあけて外部通信できるようにした](https://blog.lycolia.info/0745)
 
+![SGとOSは別レイヤー](images/conoha-two-layer.png)
+
 対処は、SGで開けたのと同じポートをcloud-initでOS側にも開けることです。nftablesがあればnft、なければufwに分岐させます。
 
 ```bash
@@ -204,5 +213,7 @@ VPSの中ではcloud-initがratholeというトンネルを起動して、VPSの
 # 参考サイト
 https://doc.conoha.jp/reference/api-vps3/
 https://support.conoha.jp/common/faq/payment-q/billing-q/
+https://developers.gmo.jp/technology/47155/
 https://blog.lycolia.info/0745
 https://github.com/rathole-org/rathole
+https://github.com/shogogoto/conoha-client

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380">
+  <rect width="1200" height="380" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#687386"/>
+    </marker>
+  </defs>
+
+  <!-- 1 -->
+  <rect x="20" y="90" rx="12" ry="12" width="200" height="130" fill="#eef4ff" stroke="#2f6fed" stroke-width="2"/>
+  <text x="120" y="140" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="24" font-weight="500" fill="#172033">使いたいとき</text>
+  <text x="120" y="175" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#687386">cpg up</text>
+
+  <!-- 2 -->
+  <rect x="260" y="90" rx="12" ry="12" width="200" height="130" fill="#eef4ff" stroke="#2f6fed" stroke-width="2"/>
+  <text x="360" y="133" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="24" font-weight="500" fill="#172033">VPS 作成</text>
+  <text x="360" y="166" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">60〜120秒で</text>
+  <text x="360" y="194" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">ACTIVE</text>
+
+  <!-- 3 -->
+  <rect x="500" y="90" rx="12" ry="12" width="200" height="130" fill="#e8f7f0" stroke="#147d55" stroke-width="2"/>
+  <text x="600" y="133" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="24" font-weight="500" fill="#172033">遊ぶ</text>
+  <text x="600" y="166" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">VPS から自宅へ</text>
+  <text x="600" y="194" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">トンネル転送</text>
+
+  <!-- 4 -->
+  <rect x="740" y="90" rx="12" ry="12" width="200" height="130" fill="#fff7ea" stroke="#9a5b00" stroke-width="2"/>
+  <text x="840" y="133" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="24" font-weight="500" fill="#172033">cpg down / TTL</text>
+  <text x="840" y="166" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">VPS・ボリューム・SG</text>
+  <text x="840" y="194" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">を削除（404確認）</text>
+
+  <!-- 5 -->
+  <rect x="980" y="90" rx="12" ry="12" width="200" height="130" fill="#f4f5f7" stroke="#9aa6b8" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="1080" y="140" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="24" font-weight="500" fill="#687386">待機中</text>
+  <text x="1080" y="175" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#9aa6b8">VPS 0 台・課金 0 円</text>
+
+  <!-- arrows -->
+  <line x1="220" y1="155" x2="252" y2="155" stroke="#687386" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="460" y1="155" x2="492" y2="155" stroke="#687386" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="155" x2="732" y2="155" stroke="#687386" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="940" y1="155" x2="972" y2="155" stroke="#687386" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- loop back -->
+  <path d="M1080,220 C1080,320 120,320 120,226" fill="none" stroke="#9aa6b8" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+  <text x="600" y="342" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="18" fill="#9aa6b8">また使いたくなったら</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9aa6b8"/>
+    </marker>
+  </defs>
+
+  <!-- vertical connector -->
+  <line x1="50" y1="60" x2="50" y2="640" stroke="#dfe3eb" stroke-width="3" stroke-dasharray="6 6"/>
+
+  <!-- row template: circle(50, y), chip rect(90..390), path text x=420, desc x=420 -->
+
+  <!-- 1 identity -->
+  <circle cx="50" cy="60" r="19" fill="#2f6fed"/>
+  <text x="50" y="68" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">1</text>
+  <rect x="90" y="38" rx="9" ry="9" width="300" height="44" fill="#eef4ff" stroke="#2f6fed" stroke-width="1.5"/>
+  <text x="240" y="67" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">identity.c3j1.conoha.io</text>
+  <text x="420" y="57" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">POST /v3/auth/tokens</text>
+  <text x="420" y="82" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">トークン発行 → X-Subject-Token をもらう。以降は X-Auth-Token で叩く</text>
+
+  <!-- 2 image-service -->
+  <circle cx="50" cy="170" r="19" fill="#2f6fed"/>
+  <text x="50" y="178" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">2</text>
+  <rect x="90" y="148" rx="9" ry="9" width="300" height="44" fill="#eef4ff" stroke="#2f6fed" stroke-width="1.5"/>
+  <text x="240" y="177" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">image-service.c3j1.conoha.io</text>
+  <text x="420" y="167" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">GET /v2/images</text>
+  <text x="420" y="192" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">イメージIDを探す（512MBなら Debian 13 = debian-13.5）</text>
+
+  <!-- 3 block-storage -->
+  <circle cx="50" cy="280" r="19" fill="#2f6fed"/>
+  <text x="50" y="288" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">3</text>
+  <rect x="90" y="258" rx="9" ry="9" width="300" height="44" fill="#eef4ff" stroke="#2f6fed" stroke-width="1.5"/>
+  <text x="240" y="287" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">block-storage.c3j1.conoha.io</text>
+  <text x="420" y="277" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">POST /v3/&#123;tenant&#125;/volumes</text>
+  <text x="420" y="302" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">イメージからブートボリューム作成 → available になるまで待つ</text>
+
+  <!-- 4 networking -->
+  <circle cx="50" cy="390" r="19" fill="#2f6fed"/>
+  <text x="50" y="398" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">4</text>
+  <rect x="90" y="368" rx="9" ry="9" width="300" height="44" fill="#eef4ff" stroke="#2f6fed" stroke-width="1.5"/>
+  <text x="240" y="397" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">networking.c3j1.conoha.io</text>
+  <text x="420" y="387" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">POST /v2.0/security-groups 等</text>
+  <text x="420" y="412" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">SG を作って、開けたいポートのルールを追加</text>
+
+  <!-- 5 compute create -->
+  <circle cx="50" cy="500" r="19" fill="#2f6fed"/>
+  <text x="50" y="508" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">5</text>
+  <rect x="90" y="478" rx="9" ry="9" width="300" height="44" fill="#eef4ff" stroke="#2f6fed" stroke-width="1.5"/>
+  <text x="240" y="507" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">compute.c3j1.conoha.io</text>
+  <text x="420" y="497" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">POST /v2.1/servers</text>
+  <text x="420" y="522" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">block_device_mapping_v2 でサーバー作成 → ACTIVE までポーリング</text>
+
+  <!-- 6 compute delete -->
+  <circle cx="50" cy="610" r="19" fill="#b42318"/>
+  <text x="50" y="618" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="20" font-weight="500" fill="#ffffff">6</text>
+  <rect x="90" y="588" rx="9" ry="9" width="300" height="44" fill="#fdeceb" stroke="#b42318" stroke-width="1.5"/>
+  <text x="240" y="617" text-anchor="middle" font-family="Noto Sans CJK JP" font-size="19" fill="#172033">compute.c3j1.conoha.io</text>
+  <text x="420" y="607" font-family="Noto Sans CJK JP" font-size="20" fill="#172033">DELETE /v2.1/servers/&#123;id&#125;</text>
+  <text x="420" y="632" font-family="Noto Sans CJK JP" font-size="18" fill="#687386">削除 → 404 になるまで確認。課金が止まるのはここだけ</text>
+</svg>
